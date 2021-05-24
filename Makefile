@@ -65,6 +65,8 @@ else ifdef HAVE_LIBOWCRYPT
 # owl and openSUSE have crypt_gensalt(3) in libowcrypt
 DEFS += -DHAVE_CRYPT_H -DHAVE_LINUX_CRYPT_GENSALT -D_OW_SOURCE
 mkpasswd_LDADD += -lcrypt -lowcrypt
+else ifeq ($(shell $(PKG_CONFIG) --exists 'libcrypto' || echo NO),)
+mkpasswd_LDADD += $(shell $(PKG_CONFIG) --libs libcrypto)
 else
 mkpasswd_LDADD += -lcrypt
 endif
@@ -123,7 +125,7 @@ afl-run:
 ##############################################################################
 install: install-whois install-mkpasswd install-pos
 
-install-whois: whois
+install-whois: install-mkpasswd whois
 	$(INSTALL) -d $(BASEDIR)$(prefix)/bin/
 	$(INSTALL) -d $(BASEDIR)$(prefix)/share/man/man1/
 	$(INSTALL) -d $(BASEDIR)$(prefix)/share/man/man5/
