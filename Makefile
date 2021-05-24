@@ -125,7 +125,7 @@ afl-run:
 ##############################################################################
 install: install-whois install-mkpasswd install-pos
 
-install-whois: install-mkpasswd whois
+install-whois: whois
 	$(INSTALL) -d $(BASEDIR)$(prefix)/bin/
 	$(INSTALL) -d $(BASEDIR)$(prefix)/share/man/man1/
 	$(INSTALL) -d $(BASEDIR)$(prefix)/share/man/man5/
